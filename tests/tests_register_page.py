@@ -6,51 +6,45 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from conftest import *
 
+VALID_USER_DATA = {
+    'name': 'Test',
+    'email': f'kirill_belov_{random.randint(0, 100)}@yandex.ru',
+    'password': 'yandexPractikumRulit'
+}
 
-def test_register_user_valid_values_true(driver, get_main_page):
-    driver.get("https://stellarburgers.nomoreparties.site/register")
-    name = 'Test'
-    email = f'kirill_belov_{random.randint(0, 100)}@yandex.ru'
-    password = 'yandexPractikumRulit'
+INVALID_PASSWORD = '123'
 
+
+def test_register_user_valid_values_true(driver, get_forgot_password_page):
     name_input = driver.find_element(By.XPATH, ".//fieldset[1]/div/div/input")
-    name_input.send_keys(name)
+    name_input.send_keys(VALID_USER_DATA['name'])
 
     email_input = driver.find_element(By.XPATH, ".//fieldset[2]/div/div/input")
-    email_input.send_keys(email)
+    email_input.send_keys(VALID_USER_DATA['email'])
 
     password_input = driver.find_element(By.XPATH, ".//fieldset[3]/div/div/input")
-    password_input.send_keys(password)
+    password_input.send_keys(VALID_USER_DATA['password'])
 
     register_button = driver.find_element(By.XPATH, "//button[text()='Зарегистрироваться']")
     register_button.click()
 
-    WebDriverWait(driver, 3).until(ec.element_to_be_clickable((By.XPATH, './/button[text()="Войти"]')))
-    assert '/login' in driver.current_url
-
+    assert WebDriverWait(driver, 3).until(ec.element_to_be_clickable((By.XPATH, './/button[text()="Войти"]')))
     driver.quit()
 
 
-def test_register_user_invalid_email_false(driver, get_main_page):
-    driver.get("https://stellarburgers.nomoreparties.site/register")
-    name = 'Test'
-    email = f'kirill_belov_{random.randint(0, 100)}@yandex.ru'
-    password = f'{random.randint(0, 100)}'
-
+def test_register_user_invalid_email_false(driver, get_forgot_password_page):
     name_input = driver.find_element(By.XPATH, ".//fieldset[1]/div/div/input")
-    name_input.send_keys(name)
+    name_input.send_keys(VALID_USER_DATA['name'])
 
     email_input = driver.find_element(By.XPATH, ".//fieldset[2]/div/div/input")
-    email_input.send_keys(email)
+    email_input.send_keys(VALID_USER_DATA['email'])
 
     password_input = driver.find_element(By.XPATH, ".//fieldset[3]/div/div/input")
-    password_input.send_keys(password)
+    password_input.send_keys(INVALID_PASSWORD)
 
     register_button = driver.find_element(By.XPATH, "//button[text()='Зарегистрироваться']")
     register_button.click()
 
-    error_message = WebDriverWait(driver, 3).until(
-        ec.visibility_of_element_located((By.XPATH, ".//p[@class ='input__error text_type_main-default']"))).text
-    assert "Некорректный пароль" == error_message
-
+    assert WebDriverWait(driver, 3).until(
+        ec.visibility_of_element_located((By.XPATH, ".//p[text()='Некорректный пароль']"))).text
     driver.quit()

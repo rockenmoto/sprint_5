@@ -1,0 +1,37 @@
+# Локаторы на главной странице
+#Кнопка "Личный кабинет"
+find_element(By.XPATH, ".//p[text()='Личный Кабинет']")
+#Кнопка "Конструктор"
+find_element(By.XPATH, './/p[text() = "Конструктор"]')
+#Кнопка "Секция 'Булки'"
+find_element(By.XPATH, './/span[text() = "Булки"]')
+#Кнопка "Секция 'Соусы'"
+find_element(By.XPATH, './/span[text() = "Соусы"]')
+#Кнопка "Секция 'Начинки'"
+find_element(By.XPATH, './/span[text() = "Начинки"]')
+#Отображение выбранной секции
+find_element(By.XPATH, './/div[@style ="display: flex;"]/div[1]')
+
+# Локаторы на странице регистрации
+#Поле "Имя"
+driver.find_element(By.XPATH, ".//fieldset[1]/div/div/input")
+#Поле "Почта"
+driver.find_element(By.XPATH, ".//fieldset[2]/div/div/input")
+#Поле "Пароль"
+driver.find_element(By.XPATH, ".//fieldset[3]/div/div/input")
+#Кнопка "Зарегистрироваться"
+find_element(By.XPATH, "//button[text()='Зарегистрироваться']")
+#Уведомление об ошибке
+find_element(By.XPATH, ".//p[text()='Некорректный пароль']")
+
+# Локаторы на странице профиля
+#Поле "Почта"
+driver.find_element(By.XPATH, ".//fieldset[2]/div/div/input")
+#Поле "Пароль"
+driver.find_element(By.XPATH, ".//fieldset[3]/div/div/input")
+#Кнопка "Войти"
+find_element(By.XPATH, './/button[text()="Войти"]').click()
+
+# Локаторы на странице регистрации и востановления пароля
+#Кнопка "Войти"
+find_element(By.XPATH, './/a[text()="Войти"]')
